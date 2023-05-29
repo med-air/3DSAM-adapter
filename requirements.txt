@@ -1,0 +1,12 @@
+batchgenerators==0.25
+matplotlib==3.7.1
+MedPy==0.4.0
+monai==1.1.0
+nibabel==5.1.0
+numpy==1.24.3
+scipy==1.9.1
+segment_anything==1.0
+skimage==0.0
+Surface_Distance_Based_Measures==0.1
+torch==1.12.1+cu113
+torchvision==0.13.1+cu113
