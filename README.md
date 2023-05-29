@@ -11,6 +11,7 @@ We recommend using Miniconda to set up an environment:
 ```
 conda create -n med_sam python=3.9.16
 conda activate med_sam
+pip install git+https://github.com/facebookresearch/segment-anything.git
 pip install -r requirements.txt
 ```
 We managed to test our code on Ubuntu 18.04 with Python 3.9 and CUDA 11.3. Our implementation is based on single GPU setting, but can be easily adapted to use multiple GPUs.
