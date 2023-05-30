@@ -34,11 +34,14 @@ Type the command below to train the baselines:
 ```sh
 python python train_baselines.py --data kits -m swin_unetr --snapshot_path "path/to/snapshot/" --data_prefix "path/to/data folder/"  --rand_crop_size 128 
 ```
+For training Swin-UNETR, download the [checkpoint](https://github.com/Project-MONAI/MONAI-extra-test-data/releases/download/0.8.1/model_swinvit.pt) and put it under the folder ckpt.
 
 Type the command below to train the 3DSAM-adapter:
 ```sh
 python train_ours.py --data kits -snapshot_path "path/to/snapshot/" -data_prefix "path/to/data folder/"  -rand_crop_size 256
 ```
+The pre-trained weight of SAM-B can be downloaded [here](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth) 
+and shall be put under the folder ckpt. Users with powerful GPUs can also download [SAM-L](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_l_0b3195.pth) or [SAM-H](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth), but the model should be modified accordingly.
 
 # Evaluation
 Type the command below to evaluate the performance baselines:
