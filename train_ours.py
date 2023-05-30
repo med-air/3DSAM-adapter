@@ -7,7 +7,7 @@ import logging
 from utils.script_util import save_checkpoint
 import sys
 from monai.losses import DiceCELoss, DiceLoss
-from modeling.Med_SAM.image_encoder import ImageEncoderViT_3d
+from modeling.Med_SAM.image_encoder import ImageEncoderViT_3d_v2 as ImageEncoderViT_3d
 import torch.nn.functional as F
 from modeling.Med_SAM.mask_decoder import VIT_MLAHead_h as VIT_MLAHead
 import torch
@@ -52,8 +52,8 @@ def main():
 
     args = parser.parse_args()
     device = args.device
-    if type(args.rand_crop_size) == int:
-        args.rand_crop_size = tuple([args.rand_crop_size, args.rand_crop_size, args.rand_crop_size])
+    if len(args.rand_crop_size) == 1:
+        args.rand_crop_size = tuple(args.rand_crop_size * 3)
     else:
         args.rand_crop_size = tuple(args.rand_crop_size)
     args.snapshot_path = os.path.join(args.snapshot_path, args.data)
@@ -154,7 +154,7 @@ def main():
         for module in prompt_encoder_list:
             module.train()
         mask_decoder.train()
-        for idx, (img, seg, box) in enumerate(train_data):
+        for idx, (img, seg, spacing) in enumerate(train_data):
             print('seg: ', seg.sum())
             out = F.interpolate(img.float(), scale_factor=512 / patch_size, mode='trilinear')
             # input_batch = (out.cuda() - pixel_mean) / pixel_std
@@ -227,7 +227,7 @@ def main():
         mask_decoder.eval()
         with torch.no_grad():
             loss_summary = []
-            for idx, (img, seg, box) in enumerate(val_data):
+            for idx, (img, seg, spacing) in enumerate(val_data):
                 print('seg: ', seg.sum())
                 out = F.interpolate(img.float(), scale_factor=512 / patch_size, mode='trilinear')
                 input_batch = out.to(device)

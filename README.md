@@ -11,7 +11,9 @@ We recommend using Miniconda to set up an environment:
 ```
 conda create -n med_sam python=3.9.16
 conda activate med_sam
+pip install torch==1.12.1+cu113 torchvision==0.13.1+cu113 --extra-index-url https://download.pytorch.org/whl/cu113
 pip install git+https://github.com/facebookresearch/segment-anything.git
+pip install git+https://github.com/deepmind/surface-distance.git
 pip install -r requirements.txt
 ```
 We managed to test our code on Ubuntu 18.04 with Python 3.9 and CUDA 11.3. Our implementation is based on single GPU setting, but can be easily adapted to use multiple GPUs.
@@ -32,26 +34,26 @@ The train-validation-test split file can be found in datafile folder. Put the sp
 # Training
 Type the command below to train the baselines:
 ```sh
-python python train_baselines.py --data kits -m swin_unetr --snapshot_path "path/to/snapshot/" --data_prefix "path/to/data folder/"  --rand_crop_size 128 
+python train_baselines.py --data kits -m swin_unetr --snapshot_path "path/to/snapshot/" --data_prefix "path/to/data folder/"  --rand_crop_size 128 
 ```
 For training Swin-UNETR, download the [checkpoint](https://github.com/Project-MONAI/MONAI-extra-test-data/releases/download/0.8.1/model_swinvit.pt) and put it under the folder ckpt.
 
 Type the command below to train the 3DSAM-adapter:
 ```sh
-python train_ours.py --data kits -snapshot_path "path/to/snapshot/" -data_prefix "path/to/data folder/"  -rand_crop_size 256
+python train_ours.py --data kits --snapshot_path "path/to/snapshot/" --data_prefix "path/to/data folder/"  --rand_crop_size 256
 ```
 The pre-trained weight of SAM-B can be downloaded [here](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth) 
-and shall be put under the folder ckpt. Users with powerful GPUs can also download [SAM-L](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_l_0b3195.pth) or [SAM-H](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth), but the model should be modified accordingly.
+and shall be put under the folder ckpt. Users with powerful GPUs can also adapt the model with [SAM-L](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_l_0b3195.pth) or [SAM-H](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth).
 
 # Evaluation
 Type the command below to evaluate the performance baselines:
 ```sh
-python test_baseline.py --data kits -m swin_unetr -snapshot_path "path/to/snapshot/" -data_prefix "path/to/data folder/"  -rand_crop_size 128 
+python test_baseline.py --data kits -m swin_unetr --snapshot_path "path/to/snapshot/" --data_prefix "path/to/data folder/"  --rand_crop_size 128 
 ```
 
 Type the command below to evaluate the 3DSAM-adapter:
 ```sh
-python test_ours.py --data kits -snapshot_path "path/to/snapshot/" -data_prefix "path/to/data folder/"  -rand_crop_size 256
+python test_ours.py --data kits --snapshot_path "path/to/snapshot/" --data_prefix "path/to/data folder/"  --rand_crop_size 256 --num_prompts 1
 ```
 
 # Pre-trained Checkpoint

@@ -48,8 +48,8 @@ def main():
     parser.add_argument("-tolerance", default=5, type=int)
 
     args = parser.parse_args()
-    if type(args.rand_crop_size) == int:
-        args.rand_crop_size = tuple([args.rand_crop_size, args.rand_crop_size, args.rand_crop_size])
+    if len(args.rand_crop_size) == 1:
+        args.rand_crop_size = tuple(args.rand_crop_size * 3)
     else:
         args.rand_crop_size = tuple(args.rand_crop_size)
     args.snapshot_path = os.path.join(args.snapshot_path, args.data, args.method)

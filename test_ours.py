@@ -1,22 +1,18 @@
 from dataset.datasets import load_data_volume
-from segment_anything import SamAutomaticMaskGenerator, sam_model_registry
 import argparse
-from torch.optim import AdamW
 import numpy as np
 import logging
-from utils.script_util import save_checkpoint
-import sys
 from monai.losses import DiceCELoss, DiceLoss
-from modeling.Med_SAM.image_encoder import ImageEncoderViT_3d
+from modeling.Med_SAM.image_encoder import ImageEncoderViT_3d_v2 as ImageEncoderViT_3d
 import torch.nn.functional as F
 from modeling.Med_SAM.mask_decoder import VIT_MLAHead_h as VIT_MLAHead
 import torch
 from modeling.Med_SAM.prompt_encoder import PromptEncoder, TwoWayTransformer
-import torch.nn as nn
 from functools import partial
 import os
 from utils.util import setup_logger
-
+import surface_distance
+from surface_distance import metrics
 
 def main():
     parser = argparse.ArgumentParser()
@@ -42,14 +38,19 @@ def main():
         default="cuda:0",
         type=str,
     )
+    parser.add_argument(
+        "--num_prompts",
+        default=1,
+        type=int,
+    )
     parser.add_argument("-bs", "--batch_size", default=1, type=int)
     parser.add_argument("--num_classes", default=2, type=int)
-    parser.add_argument("--lr", default=4e-4, type=float)
-    parser.add_argument("--max_epoch", default=400, type=int)
-    parser.add_argument("--eval_interval", default=4, type=int)
-    parser.add_argument("--resume", action="store_true")
     parser.add_argument("--num_worker", default=6, type=int)
-    parser.add_argument("--checkpoint", default="last", type=str)
+    parser.add_argument(
+        "--checkpoint",
+        default="last",
+        type=str,
+    )
     parser.add_argument("-tolerance", default=5, type=int)
     args = parser.parse_args()
     if args.checkpoint == "last":
@@ -57,8 +58,8 @@ def main():
     else:
         file = "best.pth.tar"
     device = args.device
-    if type(args.rand_crop_size) == int:
-        args.rand_crop_size = tuple([args.rand_crop_size, args.rand_crop_size, args.rand_crop_size])
+    if len(args.rand_crop_size) == 1:
+        args.rand_crop_size = tuple(args.rand_crop_size * 3)
     else:
         args.rand_crop_size = tuple(args.rand_crop_size)
     args.snapshot_path = os.path.join(args.snapshot_path, args.data)
@@ -145,9 +146,7 @@ def main():
     with torch.no_grad():
         loss_summary = []
         loss_nsd = []
-        #for idx, (img, prompt, seg, nn_seg) in enumerate(test_data):
-        for idx, (img, seg, box, spacing) in enumerate(test_data):
-            print(idx)
+        for idx, (img, seg, spacing) in enumerate(test_data):
             seg = seg.float()
             prompt = F.interpolate(seg[None, :, :, :, :], img.shape[2:], mode="nearest")[0]
             seg = seg.to(device).unsqueeze(0)
@@ -155,7 +154,7 @@ def main():
             seg_pred = torch.zeros_like(prompt).to(device)
             l = len(torch.where(prompt == 1)[0])
             #np.random.seed(0)
-            sample = np.random.choice(np.arange(l), 1, replace=True)
+            sample = np.random.choice(np.arange(l), args.num_prompts, replace=True)
             #sample = sample[:3]
             x = torch.where(prompt == 1)[1][sample].unsqueeze(1)
             y = torch.where(prompt == 1)[3][sample].unsqueeze(1)
@@ -195,15 +194,19 @@ def main():
             seg_pred[:, d_min:d_max, h_min:h_max, w_min:w_max] += pred
 
             final_pred = F.interpolate(seg_pred.unsqueeze(1), size = seg.shape[2:],  mode="trilinear")
-            masks = final_pred>0.5
-            loss = dice_loss(masks, seg)
-            loss_summary.append(1-loss.detach().cpu().numpy())
+            masks = final_pred > 0.5
+            loss = 1 - dice_loss(masks, seg)
+            loss_summary.append(loss.detach().cpu().numpy())
 
             ssd = surface_distance.compute_surface_distances((seg == 1)[0, 0].cpu().numpy(),
                                                              (masks==1)[0, 0].cpu().numpy(),
                                                              spacing_mm=spacing[0].numpy())
             nsd = metrics.compute_surface_dice_at_tolerance(ssd, args.tolerance)  # kits
             loss_nsd.append(nsd)
+            logger.info(
+                " Case {} - Dice {:.6f} | NSD {:.6f}".format(
+                    test_data.dataset.img_dict[idx], loss.item(), nsd
+                ))
         logging.info("- Test metrics Dice: " + str(np.mean(loss_summary)))
         logging.info("- Test metrics NSD: " + str(np.mean(loss_nsd)))
 

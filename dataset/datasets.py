@@ -95,7 +95,6 @@ def load_data_volume(
     dataset = DATASET_DICT[data](
         img_files,
         seg_files,
-        batch_size=batch_size,
         split=split,
         augmentation=augmentation,
         rand_crop_spatial_size=rand_crop_spatial_size,

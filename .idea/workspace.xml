@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="7db148be-2ece-4a62-af7a-cb753973dfd8" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset/base_dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataset/base_dataset.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset/datasets.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataset/datasets.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_baselines.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_baselines.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_ours.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_ours.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/train_baselines.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_baselines.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/train_ours.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_ours.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,7 +35,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "/home/petergong/Documents/code/3DSAM-adapter"
+    "last_opened_file_path": "/home/petergong/Documents/research/ich_segmentation/Adapter_Trainer/inference_colon_strict.py"
   }
 }]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
