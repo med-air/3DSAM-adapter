@@ -44,7 +44,7 @@ def main():
     parser.add_argument("-bs", "--batch_size", default=1, type=int)
     parser.add_argument("--num_classes", default=2, type=int)
     parser.add_argument("--lr", default=4e-4, type=float)
-    parser.add_argument("--max_epoch", default=400, type=int)
+    parser.add_argument("--max_epoch", default=500, type=int)
     parser.add_argument("--eval_interval", default=4, type=int)
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--num_worker", default=6, type=int)
@@ -137,13 +137,13 @@ def main():
     mask_decoder.to(device)
 
 
-    encoder_opt = AdamW([i for i in img_encoder.parameters() if i.requires_grad==True], lr=2 * args.lr, weight_decay=0)
-    encoder_scheduler = torch.optim.lr_scheduler.LinearLR(encoder_opt, start_factor=1.0, end_factor=0.05, total_iters=100)
-    feature_opt = AdamW(parameter_list, lr=2 * args.lr, weight_decay=0)
-    feature_scheduler = torch.optim.lr_scheduler.LinearLR(feature_opt, start_factor=1.0, end_factor=0.05,
-                                                          total_iters=100)
+    encoder_opt = AdamW([i for i in img_encoder.parameters() if i.requires_grad==True], lr=args.lr, weight_decay=0)
+    encoder_scheduler = torch.optim.lr_scheduler.LinearLR(encoder_opt, start_factor=1.0, end_factor=0.01, total_iters=500)
+    feature_opt = AdamW(parameter_list, lr=args.lr, weight_decay=0)
+    feature_scheduler = torch.optim.lr_scheduler.LinearLR(feature_opt, start_factor=1.0, end_factor=0.01,
+                                                          total_iters=500)
     decoder_opt = AdamW([i for i in mask_decoder.parameters() if i.requires_grad == True], lr=args.lr, weight_decay=0)
-    decoder_scheduler = torch.optim.lr_scheduler.LinearLR(decoder_opt, start_factor=1.0, end_factor=0.1, total_iters=100)
+    decoder_scheduler = torch.optim.lr_scheduler.LinearLR(decoder_opt, start_factor=1.0, end_factor=0.01, total_iters=500)
     dice_loss = DiceLoss(include_background=False, softmax=True, to_onehot_y=True, reduction="none")
     loss_cal = DiceCELoss(include_background=False, softmax=True, to_onehot_y=True, lambda_dice=0.5, lambda_ce=0.5)
     best_loss = np.inf

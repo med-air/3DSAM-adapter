@@ -58,8 +58,8 @@ python test_ours.py --data kits --snapshot_path "path/to/snapshot/" --data_prefi
 
 # Pre-trained Checkpoint
 
-Our pretrained checkpoint can be downloaded through [one-drive](placeholder).
-
+Our pretrained checkpoint can be downloaded through [one-drive](https://mycuhk-my.sharepoint.com/:f:/g/personal/1155187960_link_cuhk_edu_hk/EgSZwTonMG1Cl_PA7wTP5zgBe-DU4K5rb0woDt3i8U22SA?e=0jmfkq).
+For KiTS, LiTS and MSD-Colon, the crop size is 256. For MSD-Pancreas, the crop size is 128.
 
 ## Acknowledgement
 Our code is based on [Segment-Anything](https://github.com/facebookresearch/segment-anything).
