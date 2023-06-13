@@ -19,7 +19,7 @@ pip install -r requirements.txt
 We managed to test our code on Ubuntu 18.04 with Python 3.9 and CUDA 11.3. Our implementation is based on single GPU setting, but can be easily adapted to use multiple GPUs.
 
 ## Dataset
-We use the following four open-source datasets for training and evaluation our model: [kITS 2021](https://kits-challenge.org/kits21/),
+We use the following four open-source datasets for training and evaluation our model: [KiTS 2021](https://kits-challenge.org/kits21/),
 [MSD-Pancreas](http://medicaldecathlon.com/),
 [LiTS 2017](https://competitions.codalab.org/competitions/17094),
 [MSD-Colon](http://medicaldecathlon.com/).
