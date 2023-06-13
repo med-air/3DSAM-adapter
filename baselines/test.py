@@ -1,4 +1,3 @@
-
 import os
 from dataset.datasets import load_data_volume
 import argparse
@@ -17,9 +16,17 @@ import surface_distance
 from surface_distance import metrics
 
 
+def set_default_arguments(args):
+    args.rand_crop_size = (64, 160, 160)
+
+    return args
+
+
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--data", default=None, type=str, choices=["kits", "pancreas", "lits", "colon"])
+    parser.add_argument(
+        "--data", default=None, type=str, choices=["kits", "pancreas", "lits", "colon"]
+    )
     parser.add_argument("--data_prefix", default=None, type=str)
     parser.add_argument(
         "--snapshot_path",
@@ -38,10 +45,6 @@ def main():
         default="",
         type=str,
     )
-    parser.add_argument(
-        "--rand_crop_size",
-        nargs='+', type=int,
-    )
     parser.add_argument("--overlap", default=0.7, type=float)
     parser.add_argument(
         "--infer_mode", default="constant", type=str, choices=["constant", "gaussian"]
@@ -49,13 +52,10 @@ def main():
     parser.add_argument("--save_pred", action="store_true")
     parser.add_argument("--num_classes", default=2, type=int)
     parser.add_argument("--num_worker", default=6, type=int)
-    parser.add_argument("-tolerance", default=5, type=int)
+    parser.add_argument("--tolerance", default=5, type=int)
 
     args = parser.parse_args()
-    if len(args.rand_crop_size) == 1:
-        args.rand_crop_size = tuple(args.rand_crop_size * 3)
-    else:
-        args.rand_crop_size = tuple(args.rand_crop_size)
+    args = set_default_arguments(args)
     args.snapshot_path = os.path.join(args.snapshot_path, args.data, args.method)
     if not os.path.exists(args.snapshot_path):
         os.makedirs(args.snapshot_path)
@@ -103,7 +103,6 @@ def main():
             img = img.cuda().float()
             img = img[:, :1, :, :, :]
 
-            # masks = seg_net(img)
             masks = sliding_window_inference(
                 img,
                 roi_size=args.rand_crop_size,

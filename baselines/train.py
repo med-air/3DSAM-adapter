@@ -1,4 +1,3 @@
-
 import os
 from dataset.datasets import load_data_volume
 import argparse
@@ -11,6 +10,13 @@ from monai.losses import DiceCELoss, DiceLoss
 from monai.inferers import sliding_window_inference
 import torch
 from utils.util import setup_logger
+
+
+def set_default_arguments(args):
+    args.rand_crop_size = (64, 160, 160)
+
+    return args
+
 
 def main():
     parser = argparse.ArgumentParser()
@@ -28,10 +34,6 @@ def main():
         type=str,
     )
     parser.add_argument(
-        "--rand_crop_size",
-        nargs='+', type=int,
-    )
-    parser.add_argument(
         "-m",
         "--method",
         default=None,
@@ -45,13 +47,9 @@ def main():
     parser.add_argument("--eval_interval", default=4, type=int)
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--num_worker", default=6, type=int)
-    parser.add_argument("-tolerance", default=5, type=int)
 
     args = parser.parse_args()
-    if len(args.rand_crop_size) == 1:
-        args.rand_crop_size = tuple(args.rand_crop_size * 3)
-    else:
-        args.rand_crop_size = tuple(args.rand_crop_size)
+    args = set_default_arguments(args)
     args.snapshot_path = os.path.join(args.snapshot_path, args.data, args.method)
     if not os.path.exists(args.snapshot_path):
         os.makedirs(args.snapshot_path)
@@ -141,7 +139,6 @@ def main():
                 for idx, (img, seg, _) in enumerate(val_data):
                     img = img.cuda().float()
                     img = img[:, :1, :, :, :]
-                    # masks = seg_net(img)
                     masks = sliding_window_inference(
                         img,
                         roi_size=args.rand_crop_size,
