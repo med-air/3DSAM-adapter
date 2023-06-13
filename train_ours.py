@@ -206,7 +206,7 @@ def main():
             decoder_opt.zero_grad()
             feature_opt.zero_grad()
             loss.backward()
-            logging.info(
+            logger.info(
                 'epoch: {}/{}, iter: {}/{}'.format(epoch_num, args.max_epoch, idx, len(train_data)) + ": loss:" + str(
                     loss_summary[-1].flatten()[0]))
             torch.nn.utils.clip_grad_norm_(img_encoder.parameters(), 1.0)
@@ -219,7 +219,7 @@ def main():
         feature_scheduler.step()
         decoder_scheduler.step()
 
-        logging.info("- Train metrics: " + str(np.mean(loss_summary)))
+        logger.info("- Train metrics: " + str(np.mean(loss_summary)))
 
         img_encoder.eval()
         for module in prompt_encoder_list:
@@ -274,10 +274,10 @@ def main():
                 seg = seg.unsqueeze(1)
                 loss = dice_loss(masks, seg)
                 loss_summary.append(loss.detach().cpu().numpy())
-                logging.info(
+                logger.info(
                     'epoch: {}/{}, iter: {}/{}'.format(epoch_num, args.max_epoch, idx, len(val_data)) + ": loss:" + str(
                         loss_summary[-1].flatten()[0]))
-        logging.info("- Val metrics: " + str(np.mean(loss_summary)))
+        logger.info("- Val metrics: " + str(np.mean(loss_summary)))
 
 
         is_best = False
@@ -295,7 +295,7 @@ def main():
                          },
                         is_best=is_best,
                         checkpoint=args.snapshot_path)
-        logging.info("- Val metrics best: " + str(best_loss))
+        logger.info("- Val metrics best: " + str(best_loss))
 
 
 if __name__ == "__main__":
