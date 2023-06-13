@@ -27,36 +27,6 @@ We use the following four open-source datasets for training and evaluation our m
 The train-validation-test split file can be found in datafile folder. Put the split file under the root directory storing the data.
 
 Readers can also download the dataset from our [OneDrive](https://mycuhk-my.sharepoint.com/:f:/g/personal/1155187960_link_cuhk_edu_hk/EmsBt_N3vh9CnzO9Wgg0_Q0BqBi9nkZY8PTBRCm0FH22ng?e=znsQVt).
-<!-- 
-# Training
-Type the command below to train the baselines:
-```sh
-python train_baselines.py --data kits -m swin_unetr --snapshot_path "path/to/snapshot/" --data_prefix "path/to/data folder/"  --rand_crop_size 128 
-```
-For training Swin-UNETR, download the [checkpoint](https://github.com/Project-MONAI/MONAI-extra-test-data/releases/download/0.8.1/model_swinvit.pt) and put it under the folder ckpt.
-
-Type the command below to train the 3DSAM-adapter:
-```sh
-python train_ours.py --data kits --snapshot_path "path/to/snapshot/" --data_prefix "path/to/data folder/"  --rand_crop_size 256
-```
-The pre-trained weight of SAM-B can be downloaded [here](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth) 
-and shall be put under the folder ckpt. Users with powerful GPUs can also adapt the model with [SAM-L](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_l_0b3195.pth) or [SAM-H](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth).
-
-# Evaluation
-Type the command below to evaluate the performance baselines:
-```sh
-python test_baseline.py --data kits -m swin_unetr --snapshot_path "path/to/snapshot/" --data_prefix "path/to/data folder/"  --rand_crop_size 128 
-```
-
-Type the command below to evaluate the 3DSAM-adapter:
-```sh
-python test_ours.py --data kits --snapshot_path "path/to/snapshot/" --data_prefix "path/to/data folder/"  --rand_crop_size 256 --num_prompts 1
-```
-
-# Pre-trained Checkpoint
-
-Our pretrained checkpoint can be downloaded through [one-drive](https://mycuhk-my.sharepoint.com/:f:/g/personal/1155187960_link_cuhk_edu_hk/EgSZwTonMG1Cl_PA7wTP5zgBe-DU4K5rb0woDt3i8U22SA?e=0jmfkq).
-For KiTS, LiTS and MSD-Colon, the crop size is 256. For MSD-Pancreas, the crop size is 128. -->
 
 ## Usage
 Please refer to [3DSAM-adapter](/3DSAM-adapter/) and [baselines](/baselines/) for training and evaluation details.
