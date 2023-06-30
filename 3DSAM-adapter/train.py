@@ -34,7 +34,7 @@ def main():
     )
     parser.add_argument(
         "--rand_crop_size",
-        default=[0],
+        default=0,
         nargs='+', type=int,
     )
     parser.add_argument(
@@ -53,7 +53,7 @@ def main():
 
     args = parser.parse_args()
     device = args.device
-    if args.rand_crop_size[0] == 0:
+    if args.rand_crop_size == 0:
         if args.data in ["kits", "colon"]:
             args.rand_crop_size = (256, 256, 256)
         if args.data in ["pancreas", "lits"]:
