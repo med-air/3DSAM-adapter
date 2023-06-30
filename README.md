@@ -94,6 +94,10 @@ python test.py --data kits -m swin_unetr --snapshot_path "path/to/snapshot/" --d
 ```
 
 #### 3DSAM-adapter
+To use the code, first go to the folder `3DSAM-adapter`
+```
+cd 3DSAM-adapter
+```
 Type the command below to train the 3DSAM-adapter:
 ```sh
 python train.py --data kits --snapshot_path "path/to/snapshot/" --data_prefix "path/to/data folder/" 
