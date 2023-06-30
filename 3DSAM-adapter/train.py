@@ -34,7 +34,7 @@ def main():
     )
     parser.add_argument(
         "--rand_crop_size",
-        default=0,
+        default=[0],
         nargs='+', type=int,
     )
     parser.add_argument(
