@@ -34,6 +34,7 @@ def main():
     )
     parser.add_argument(
         "--rand_crop_size",
+        default=0,
         nargs='+', type=int,
     )
     parser.add_argument(
@@ -52,10 +53,16 @@ def main():
 
     args = parser.parse_args()
     device = args.device
-    if len(args.rand_crop_size) == 1:
-        args.rand_crop_size = tuple(args.rand_crop_size * 3)
+    if args.rand_crop_size[0] == 0:
+        if args.data in ["kits", "colon"]:
+            args.rand_crop_size = (256, 256, 256)
+        if args.data in ["pancreas", "lits"]:
+            args.rand_crop_size = (128, 128, 128)
     else:
-        args.rand_crop_size = tuple(args.rand_crop_size)
+        if len(args.rand_crop_size) == 1:
+            args.rand_crop_size = tuple(args.rand_crop_size * 3)
+        else:
+            args.rand_crop_size = tuple(args.rand_crop_size)
     args.snapshot_path = os.path.join(args.snapshot_path, args.data)
     if not os.path.exists(args.snapshot_path):
         os.makedirs(args.snapshot_path)
