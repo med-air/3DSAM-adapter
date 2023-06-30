@@ -50,11 +50,11 @@ We use the 4 open-source datasets for training and evaluation our model.
 - torchvision=0.13.1
 #### Installation
 We suggest using Anaconda to setup environment on Linux, if you have installed anaconda, you can skip this step.
-```
+```sh
 wget https://repo.anaconda.com/archive/Anaconda3-2020.11-Linux-x86_64.sh && zsh Anaconda3-2020.11-Linux-x86_64.sh
 ```
 Then, we can create environment and install packages using provided `requirements.txt`
-```
+```sh
 conda create -n med_sam python=3.9.16
 conda activate med_sam
 pip install torch==1.12.1+cu113 torchvision==0.13.1+cu113 --extra-index-url https://download.pytorch.org/whl/cu113
@@ -64,38 +64,9 @@ pip install -r requirements.txt
 ```
 Our implementation is based on single GPU setting, but can be easily adapted to use multiple GPUs.
 
-#### Baselines
-We provide our implementation for baselines includes
-- TransBTS[[original paper]](https://arxiv.org/abs/2103.04430)[[original implementation]](https://github.com/Wenxuan-1119/TransBTS)
-- nnFormer[[original paper]](https://arxiv.org/abs/2109.03201)[[original implementation]](https://github.com/282857341/nnFormer)
-- Swin UNETR[[original paper]](https://arxiv.org/abs/2111.14791)[[original implementation]](https://github.com/Project-MONAI/research-contributions/tree/main/SwinUNETR)
-- UNETR++[[original paper]](https://arxiv.org/abs/2212.04497)[[original implementation]](https://github.com/Amshaker/unetr_plus_plus)
-- 3D UX-Net[[original paper]](https://arxiv.org/abs/2209.15076)[[original implementation]](https://github.com/MASILab/3DUX-Net)
-
-To use the code, first go to the folder `baselines`
-```
-cd baselines
-```
-Type the command below to train the baselines:
-```sh
-python train.py --data kits -m swin_unetr --snapshot_path "path/to/snapshot/" --data_prefix "path/to/data folder/"
-```
-Using  `--data` to indicate the dataset, can be one of `kits`, `pancreas`, `lits`, `colon`
-
-Using `-m` to indicate the method, can be one of `swin_unetr`, `unetr`, `3d_uxnet`, `nnformer`, `unetr++`, `transbts`
-
-For training Swin-UNETR, download the [checkpoint](https://github.com/Project-MONAI/MONAI-extra-test-data/releases/download/0.8.1/model_swinvit.pt) and put it under the folder ckpt.
-
-We use various hyper-parameters for each dataset, for more details, please refer to [datasets.py](dataset/datasets.py). The crop size is set as `(64, 160, 160)` for all datasets.
-
-Type the command below to evaluate the performance baselines:
-```sh
-python test.py --data kits -m swin_unetr --snapshot_path "path/to/snapshot/" --data_prefix "path/to/data folder/"
-```
-
-#### 3DSAM-adapter
+#### 3DSAM-adapter (Ours)
 To use the code, first go to the folder `3DSAM-adapter`
-```
+```sh
 cd 3DSAM-adapter
 ```
 Type the command below to train the 3DSAM-adapter:
@@ -114,11 +85,47 @@ Using  `--num_prompts` to indicate the number of points used as prompt, the defa
 Our pretrained checkpoint can be downloaded through [OneDrive](https://mycuhk-my.sharepoint.com/:f:/g/personal/1155187960_link_cuhk_edu_hk/EgSZwTonMG1Cl_PA7wTP5zgBe-DU4K5rb0woDt3i8U22SA?e=0jmfkq).
 For KiTS and MSD-Colon, the crop size is 256. For LiTS and MSD-Pancreas, the crop size is 128.
 
+#### Baselines
+
+We provide our implementation for baselines includes
+
+- Swin UNETR [[original paper]](https://arxiv.org/abs/2111.14791)[[original implementation]](https://github.com/Project-MONAI/research-contributions/tree/main/SwinUNETR)
+- 3D UX-Net [[original paper]](https://arxiv.org/abs/2209.15076)[[original implementation]](https://github.com/MASILab/3DUX-Net)
+- UNETR++ [[original paper]](https://arxiv.org/abs/2212.04497)[[original implementation]](https://github.com/Amshaker/unetr_plus_plus)
+- TransBTS [[original paper]](https://arxiv.org/abs/2103.04430)[[original implementation]](https://github.com/Wenxuan-1119/TransBTS)
+- nnFormer [[original paper]](https://arxiv.org/abs/2109.03201)[[original implementation]](https://github.com/282857341/nnFormer)
+
+To use the code, first go to the folder `baselines`
+
+```sh
+cd baselines
+```
+
+Type the command below to train the baselines:
+
+```sh
+python train.py --data kits -m swin_unetr --snapshot_path "path/to/snapshot/" --data_prefix "path/to/data folder/"
+```
+
+Using  `--data` to indicate the dataset, can be one of `kits`, `pancreas`, `lits`, `colon`
+
+Using `-m` to indicate the method, can be one of `swin_unetr`, `unetr`, `3d_uxnet`, `nnformer`, `unetr++`, `transbts`
+
+For training Swin-UNETR, download the [checkpoint](https://github.com/Project-MONAI/MONAI-extra-test-data/releases/download/0.8.1/model_swinvit.pt) and put it under the folder ckpt.
+
+We use various hyper-parameters for each dataset, for more details, please refer to [datasets.py](dataset/datasets.py). The crop size is set as `(64, 160, 160)` for all datasets.
+
+Type the command below to evaluate the performance baselines:
+
+```sh
+python test.py --data kits -m swin_unetr --snapshot_path "path/to/snapshot/" --data_prefix "path/to/data folder/"
+```
+
 ## Feedback and Contact
 For any questions, please contact <a href="mailto:szgong22@cse.cuhk.edu.hk">szgong22@cse.cuhk.edu.hk</a>
 
 ## Acknowledgement
-Our code is based on [Segment-Anything](https://github.com/facebookresearch/segment-anything).
+Our code is based on [Segment-Anything](https://github.com/facebookresearch/segment-anything), [3D UX-Net](https://github.com/MASILab/3DUX-Net), and [Swin UNETR](https://github.com/Project-MONAI/tutorials/blob/main/3d_segmentation/swin_unetr_btcv_segmentation_3d.ipynb).
 
 ## Citation
 If you find this code useful, please cite in your research papers.
