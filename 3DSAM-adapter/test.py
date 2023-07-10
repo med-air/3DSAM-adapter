@@ -133,7 +133,7 @@ def main():
         input_batch = out[0].transpose(0, 1)
         batch_features, feature_list = img_encoder(input_batch)
         feature_list.append(batch_features)
-        feature_list = feature_list[::-1]
+        #feature_list = feature_list[::-1]
         points_torch = prompt.transpose(0, 1)
         new_feature = []
         for i, (feature, feature_decoder) in enumerate(zip(feature_list, prompt_encoder)):

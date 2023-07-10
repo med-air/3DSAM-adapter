@@ -309,7 +309,6 @@ class PromptEncoder(nn.Module):
         self,
         image_embeddings: torch.Tensor,
         point_coord,
-        masks = None,
         img_size = [512, 512, 32],
         feat_size = [32, 32, 32]
     ) -> Tuple[torch.Tensor, torch.Tensor]:
