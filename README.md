@@ -62,7 +62,7 @@ pip install git+https://github.com/facebookresearch/segment-anything.git
 pip install git+https://github.com/deepmind/surface-distance.git
 pip install -r requirements.txt
 ```
-Our implementation is based on single GPU setting, but can be easily adapted to use multiple GPUs.
+Our implementation is based on single GPU setting (NVIDIA A40 GPU), but can be easily adapted to use multiple GPUs. We need about 35GB of memory to run.
 
 #### 3DSAM-adapter (Ours)
 To use the code, first go to the folder `3DSAM-adapter`
