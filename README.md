@@ -35,7 +35,7 @@ We use the 4 open-source datasets for training and evaluation our model.
 -  KiTS 2021 [[original paper]](https://www.sciencedirect.com/science/article/abs/pii/S1361841520301857)[[original dataset]](https://kits-challenge.org/kits21/)[[our preprocessed dataset]](https://mycuhk-my.sharepoint.com/:u:/g/personal/1155187960_link_cuhk_edu_hk/Ebe8F12v_JtOv2ovW3a-BjkB8LryC6BFZZwtsi0kAikphw?e=w728Ud)
 - MSD-Pancreas [[original paper]](https://www.nature.com/articles/s41467-022-30695-9)[[original dataset]](http://medicaldecathlon.com/)[[our preprocessed dataset]](https://mycuhk-my.sharepoint.com/:u:/g/personal/1155187960_link_cuhk_edu_hk/EdH84TX9CJ5CiXUjIyeXEZ4B-6AK8LfLhIhlIfiVDicfVQ?e=avTPPf)
 - LiTS 2017 [[original paper]](https://www.sciencedirect.com/science/article/pii/S1361841522003085)[[original dataset]](https://competitions.codalab.org/competitions/17094)[[our preprocessed dataset]](https://mycuhk-my.sharepoint.com/:u:/g/personal/1155187960_link_cuhk_edu_hk/EcqXHRupWoxNjYkmoiHQl4QBpvTS41TfJfqfO0x0xOxgow?e=ueD0i2)
-- MSD-Colon [[original paper]](https://www.nature.com/articles/s41467-022-30695-9)[[original dataset]](http://medicaldecathlon.com/)[[our preprocessed dataset]](https://mycuhk-my.sharepoint.com/:u:/r/personal/1155187960_link_cuhk_edu_hk/Documents/public/3DMed-Adapter/dataset/Task10_Colon.zip?csf=1&web=1&e=hDeRLc)
+- MSD-Colon [[original paper]](https://www.nature.com/articles/s41467-022-30695-9)[[original dataset]](http://medicaldecathlon.com/)[[our preprocessed dataset]](https://mycuhk-my.sharepoint.com/:u:/g/personal/1155187960_link_cuhk_edu_hk/EX0cgfQJykZCiY7QAFwp-BUBR349boTd0noDU8VxkGHiEw?e=kwp893)
 
 
 ## Sample Results
