@@ -169,7 +169,7 @@ def main():
             input_batch = input_batch[0].transpose(0, 1)
             batch_features, feature_list = img_encoder(input_batch)
             feature_list.append(batch_features)
-            feature_list = feature_list[::-1]
+            #feature_list = feature_list[::-1]
             l = len(torch.where(seg == 1)[0])
             points_torch = None
             if l > 0:
