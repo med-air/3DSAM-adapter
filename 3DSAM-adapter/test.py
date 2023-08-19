@@ -60,9 +60,9 @@ def main():
         file = "best.pth.tar"
     device = args.device
     if args.rand_crop_size == 0:
-        if args.data in ["kits", "colon"]:
+        if args.data in ["kits"]:
             args.rand_crop_size = (256, 256, 256)
-        if args.data in ["pancreas", "lits"]:
+        if args.data in ["colon", "pancreas", "lits"]:
             args.rand_crop_size = (128, 128, 128)
     else:
         if len(args.rand_crop_size) == 1:
