@@ -54,9 +54,7 @@ def main():
     args = parser.parse_args()
     device = args.device
     if args.rand_crop_size == 0:
-        if args.data in ["kits"]:
-            args.rand_crop_size = (256, 256, 256)
-        if args.data in ["pancreas", "lits", "colon"]:
+        if args.data in ["pancreas", "lits", "colon", "kits"]:
             args.rand_crop_size = (128, 128, 128)
     else:
         if len(args.rand_crop_size) == 1:
@@ -173,7 +171,7 @@ def main():
             l = len(torch.where(seg == 1)[0])
             points_torch = None
             if l > 0:
-                sample = np.random.choice(np.arange(l), 40, replace=True)
+                sample = np.random.choice(np.arange(l), 10, replace=True)
                 x = torch.where(seg == 1)[1][sample].unsqueeze(1)
                 y = torch.where(seg == 1)[3][sample].unsqueeze(1)
                 z = torch.where(seg == 1)[2][sample].unsqueeze(1)
@@ -181,7 +179,7 @@ def main():
                 points_torch = points.to(device)
                 points_torch = points_torch.transpose(0,1)
             l = len(torch.where(seg < 10)[0])
-            sample = np.random.choice(np.arange(l), 10, replace=True)
+            sample = np.random.choice(np.arange(l), 20, replace=True)
             x = torch.where(seg < 10)[1][sample].unsqueeze(1)
             y = torch.where(seg < 10)[3][sample].unsqueeze(1)
             z = torch.where(seg < 10)[2][sample].unsqueeze(1)
@@ -189,7 +187,7 @@ def main():
             points_torch_negative = points.to(device)
             points_torch_negative = points_torch_negative.transpose(0, 1)
             if points_torch is not None:
-                points_torch = points_torch
+                points_torch = torch.cat([points_torch, points_torch_negative], dim=1)
             else:
                 points_torch = points_torch_negative
             new_feature = []

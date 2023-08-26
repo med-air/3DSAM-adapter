@@ -83,7 +83,7 @@ python test.py --data kits --snapshot_path "path/to/snapshot/" --data_prefix "pa
 Using  `--num_prompts` to indicate the number of points used as prompt, the default value is 1.
 
 Our pretrained checkpoint can be downloaded through [OneDrive](https://mycuhk-my.sharepoint.com/:f:/g/personal/1155187960_link_cuhk_edu_hk/EgSZwTonMG1Cl_PA7wTP5zgBe-DU4K5rb0woDt3i8U22SA?e=0jmfkq).
-For KiTS the crop size is 256. For LiTS, MSD-Pancreas, and MSD-Colon, the crop size is 128.
+For all four datasets, the crop size  is 128.
 
 #### Baselines
 
