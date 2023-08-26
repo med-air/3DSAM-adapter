@@ -243,7 +243,7 @@ def main():
                 l = len(torch.where(seg == 1)[0])
                 points_torch = None
                 if l > 0:
-                    sample = np.random.choice(np.arange(l), 40, replace=True)
+                    sample = np.random.choice(np.arange(l), 10, replace=True)
                     x = torch.where(seg == 1)[1][sample].unsqueeze(1)
                     y = torch.where(seg == 1)[3][sample].unsqueeze(1)
                     z = torch.where(seg == 1)[2][sample].unsqueeze(1)
