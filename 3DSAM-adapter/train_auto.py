@@ -7,9 +7,9 @@ import logging
 from utils.script_util import save_checkpoint
 import sys
 from monai.losses import DiceCELoss, DiceLoss
-from modeling.Med_SAM.image_encoder import ImageEncoderViT_3d_v2 as ImageEncoderViT_3d
+from modeling.image_encoder import ImageEncoderViT_3d_v2 as ImageEncoderViT_3d
 import torch.nn.functional as F
-from modeling.Med_SAM.mask_decoder import VIT_MLAHead_h as VIT_MLAHead
+from modeling.mask_decoder import VIT_MLAHead_h as VIT_MLAHead
 import torch
 from modeling.Med_SAM.prompt_encoder import PromptEncoder, TwoWayTransformer
 import torch.nn as nn
