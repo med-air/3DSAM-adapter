@@ -11,7 +11,6 @@ from modeling.image_encoder import ImageEncoderViT_3d_v2 as ImageEncoderViT_3d
 import torch.nn.functional as F
 from modeling.mask_decoder import VIT_MLAHead_h as VIT_MLAHead
 import torch
-from modeling.Med_SAM.prompt_encoder import PromptEncoder, TwoWayTransformer
 import torch.nn as nn
 from functools import partial
 import os
